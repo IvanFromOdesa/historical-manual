@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to My Application</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<style> body {font-family: Arial, Helvetica, sans-serif;}
+    .left {
+        font-size: 20px;
+        text-align: left;
+    }
+
+    .child {
+        font-size: 20px;
+        display: inline-block;
+        padding: 10px;
+    }
+
+    .btn {
+        line-height:0px;
+        height:20px;
+        font-family: 'Poppins';
+        color: #fff !important;
+        text-transform: uppercase;
+        font-weight: 700;
+        text-decoration: none;
+        background: #60a3bc;
+        padding: 20px;
+        border-radius: 50px;
+        display: inline-block;
+        border: none;
+        transition: all 0.4s ease 0s;
+    }
+
+    .btn:hover {
+        text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+        -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+        -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+        transition: all 0.4s ease 0s;
+    }
+
+    .color {
+        font-size: 18px;
+        color: #663300 !important;
+    }
+    .color:hover, .color:active {
+        color: #664D33 !important;
+    }
+</style>
+<body>
+<div class="container-fluid text-center">
+    <div><h2>Manage Governors</h2></div>
+    <div class="m-2">
+        <a class="h3" th:href="@{/governors/new}">Add New Governor</a>
+    </div>
+    <div class="m-2">
+        <a class="h3" th:href="@{http://localhost:8080/}">Back to Main Menu</a>
+    </div>
+    <div th:if="${messageG}" class="alert alert-success">
+        [[${messageG}]]
+    </div>
+    <div th:if="${resultNumG}" class="alert alert-success">
+        [[${resultNumG}]] governors elected after the specified date!
+    </div>
+    <h4 class="left">
+        <form ui-jp="parsley" th:action="@{/governors/showByDate}" th:object="${myGovernor}" method="get">
+            <div class="row m-b">
+                <div class="child">Show Governors with Date of Intercession After:</div>
+                <div class="child"><input id="filter" type="date" th:field="*{dateOfIntercession}" class="form-control input-sm w-auto inline m-r"/></div>
+                <div class="child box-3">
+                    <button class="btn">Search!</button>
+                </div>
+            </div>
+        </form>
+    </h4>
+    <div div style="position:absolute; left:1000px; top:150px">
+        <a class="color" th:href="@{/governors/showByNoGovernor}">Show states with no Governor!</a>
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Age</th>
+                <th>Position</th>
+                <th>Date of Intercession</th>
+                <th>Date of Resignation</th>
+                <th>Per Capita Income in $</th>
+                <th>Population below poverty in %</th>
+                <th>Linked State</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="governor : ${listGovernors}">
+                <tr>
+                    <td>[[${governor.idGovernor}]]</td>
+                    <td>[[${governor.fullName}]]</td>
+                    <td>[[${governor.age}]]</td>
+                    <td>[[${governor.position}]]</td>
+                    <td>[[${governor.dateOfIntercession}]]</td>
+                    <td>[[${governor.dateOfResignation}]]</td>
+                    <td>[[${governor.perCapitaIncome}]]</td>
+                    <td>[[${governor.populationBelowPoverty}]]</td>
+                    <td>[[${governor.state.getOfficialStateName}]]</td>
+                    <td sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">
+                        <a class="h4 mr-3" th:href="@{'/governors/edit/' +${governor.idGovernor}}">Edit</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a sec:authorize="hasAuthority('ADMIN')" class="h4" th:href="@{'/governors/delete/' +${governor.idGovernor}}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

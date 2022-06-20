@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>[[${pageTitleSE}]]</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="text-center"><h2>[[${pageTitleSE}]]</h2></div>
+    <form th:action="@{/stateEvents/save}" method="post" th:object="${stateEvent}" style="max-width: 550px; margin: 0 auto;">
+        <input type="hidden" th:field="*{statKey}">
+        <div class="border border-secondary rounded p-3">
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">GDP during event (in bln)</label>
+                <div class="col-sm-8">
+                    <input type="number" th:field="*{eventGdp}" class="form-control" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Population during event (in mln)</label>
+                <div class="col-sm-8">
+                    <input type="number" th:field="*{populationEvent}" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">On Date</label>
+                <div class="col-sm-8">
+                    <input type="date" th:field="*{onDateE}" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">State</label>
+                <div class="col-sm-8">
+                    <select th:field="*{state}" class="form-control" required>
+                        <th:block th:each="state1 : ${listStates}">
+                            <option th:text="${state1.officialStateName}" th:value="${state1.idState}"/>
+                        </th:block>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Event</label>
+                <div class="col-sm-8">
+                    <select th:field="*{event}" class="form-control" required>
+                        <th:block th:each="event1 : ${listEvents}">
+                            <option th:text="${event1.eventName}" th:value="${event1.idEvent}"/>
+                        </th:block>
+                    </select>
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary m-2">Save</button>
+                <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    function cancelForm() {
+        window.location = "[[@{/events}]]";
+    }
+</script>
+</body>
+</html>

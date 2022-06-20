@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to My Application</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<style>
+    .cen {
+        font-size: 30px;
+        text-align: center;
+    }
+</style>
+<body>
+<div class="container-fluid text-center">
+    <div><h2>All existing Persons (listed below)</h2></div>
+    <div class="cen">
+        <a th:href="@{/persons/export}" class="child">Export as PDF</a>
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>Person Name</th>
+                <th>Person Position</th>
+                <th>Person Role</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="person : ${list}">
+                <tr>
+                    <td>[[${person.getName}]]</td>
+                    <td>[[${person.getPosition}]]</td>
+                    <td>[[${person.getRole}]]</td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

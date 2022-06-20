@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>[[${pageTitleSC}]]</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="text-center"><h2>[[${pageTitleSC}]]</h2></div>
+    <form th:action="@{/stateCapitals/save}" method="post" th:object="${stateCapital}" style="max-width: 550px; margin: 0 auto;">
+        <input type="hidden" th:field="*{capKey}">
+        <div class="border border-secondary rounded p-3">
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Date of Formation</label>
+                <div class="col-sm-8">
+                    <input type="date" th:field="*{dateOfFormation}" class="form-control" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Date of Termination</label>
+                <div class="col-sm-8">
+                    <input type="date" th:field="*{terminationDate}" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">State</label>
+                <div class="col-sm-8">
+                    <select th:field="*{state}" class="form-control" required>
+                        <th:block th:each="state1 : ${listStates}">
+                            <option th:text="${state1.officialStateName}" th:value="${state1.idState}"/>
+                        </th:block>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">War</label>
+                <div class="col-sm-8">
+                    <select th:field="*{capital}" class="form-control" required>
+                        <th:block th:each="capital1 : ${listCapitals}">
+                            <option th:text="${capital1.officialCapitalName}" th:value="${capital1.idCapital}"/>
+                        </th:block>
+                    </select>
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary m-2">Save</button>
+                <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    function cancelForm() {
+        window.location = "[[@{/capitals}]]";
+    }
+</script>
+</body>
+</html>

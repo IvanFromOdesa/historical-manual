@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to My Application</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<style>
+    body {
+        background-color: 	#FFFFFF;
+    }
+    h1 {
+        color: #e52165;
+    }
+    #container {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        text-align: center;
+        justify-content: space-around;
+    }
+
+    #text-container a {
+        display: block;
+    }
+
+    .big {
+        font-size: 22px;
+    }
+
+    .new {
+        font-style: oblique;
+        font-palette: light;
+        font-size: 22px;
+    }
+</style>
+<body>
+<div class="container-fluid text-center">
+    <div sec:authorize="isAuthenticated()" class="big">
+        Welcome <b><span sec:authentication="name"></span></b>
+        &nbsp;
+        <b>Your Roles:</b>
+        <span sec:authentication="principal.authorities">Roles</span>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Logout"/>
+        </form>
+    </div>
+</div>
+<div id="container">
+    <img src="https://images-na.ssl-images-amazon.com/images/I/91KR-KGo2VL.jpg" style="width:360px;height:500px">
+    <div id="text-container">
+        <a class="big">Welcome to my historical Reference Book!</a>
+        <a class="new">Browse links:</a>
+        <a class="h2" th:href="@{/states}">Manage States</a>
+        <a class="h2" th:href="@{/capitals}">Manage Capitals</a>
+        <a class="h2" th:href="@{/events}">Manage Events</a>
+        <a class="h2" th:href="@{/wars}">Manage Wars</a>
+        <a class="h2" th:href="@{/figures}">Manage Figures</a>
+        <a class="h2" th:href="@{/governors}">Manage Governors</a>
+        <a class="h2" th:href="@{/statistics}">Manage Statistics</a>
+    </div>
+    <img src="https://m.media-amazon.com/images/I/61dF0HhSbxL.jpg" />
+</div>
+</body>
+</html>
+

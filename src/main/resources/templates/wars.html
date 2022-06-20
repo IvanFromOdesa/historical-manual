@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to My Application</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <style> body {font-family: Arial, Helvetica, sans-serif;}
+
+    /* The Modal (background) */
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        padding-top: 100px;
+        /* Location of the box */
+        left: 0;   top: 0;   width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0,0,0);
+        /* Fallback color */
+        background-color: rgba(0,0,0,0.4);
+        /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        position: relative;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 0;
+        border: 1px solid #888;
+        width: 80%;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+        -webkit-animation-name: animatetop;
+        -webkit-animation-duration: 0.4s;
+        animation-name: animatetop;
+        animation-duration: 0.4s
+    }
+
+    @-webkit-keyframes animatetop {
+        from {top:-300px; opacity:0}
+        to {top:0; opacity:1}
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover, .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .modal-header {
+        padding: 2px 16px;
+        background-color: #60a3bc;
+        color: white;
+    }
+
+    .modal-body {padding: 2px 16px;}
+
+    .something th {
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .left {
+        font-size: 20px;
+        text-align: left;
+    }
+
+    .child {
+        font-size: 20px;
+        display: inline-block;
+        padding: 10px;
+    }
+
+    .btn {
+        line-height:0px;
+        height:20px;
+        font-family: 'Poppins';
+        color: #fff !important;
+        text-transform: uppercase;
+        font-weight: 700;
+        text-decoration: none;
+        background: #60a3bc;
+        padding: 20px;
+        border-radius: 50px;
+        display: inline-block;
+        border: none;
+        transition: all 0.4s ease 0s;
+    }
+
+    .btn:hover {
+        text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+        -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+        -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+        transition: all 0.4s ease 0s;
+    }
+    </style>
+</head>
+<body>
+<div class="container-fluid text-center">
+    <div><h2>Manage Wars</h2></div>
+    <div class="m-2">
+        <a class="h3" th:href="@{/wars/new}">Add New War</a>
+    </div>
+    <div th:if="${flag==false}">
+        <div class="m-2">
+            <button id="myBtn">Check Out Assigned States</button>
+        </div>
+    </div>
+    <div class="m-2">
+        <a class="h3" th:href="@{http://localhost:8080/}">Back to Main Menu</a>
+    </div>
+    <div th:if="${messageW}" class="alert alert-success">
+        [[${messageW}]]
+    </div>
+    <h4 class="left">
+        <form ui-jp="parsley" id="id1" th:action="@{/wars/findByName}" th:object="${myWar}" method="get">
+            <div class="row m-b">
+                <div class="child">Search by
+                    <select id="search-by">
+                        <option value="findByName">War Name</option>
+                        <option value="findByDate">War Date</option>
+                    </select>:</div>
+                <div class="child"><input id="filter" type="text" th:field="*{warName}" class="form-control input-sm w-auto inline m-r" /></div>
+                <div class="child"><input id="filter1" type="date" th:field="*{warName}" class="form-control input-sm w-auto inline m-r" style="display: none"/></div>
+                <div class="child box-3" th:if="${flag==false}">
+                    <button class="btn">Search!</button>
+                </div>
+            </div>
+        </form>
+    </h4>
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Name of War</th>
+                <th>Participating States</th>
+                <th>Date of Beginning</th>
+                <th>Date of End</th>
+                <th>Victor</th>
+                <th>Outcome</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="war : ${listWars}">
+                <tr>
+                    <td>[[${war.idWar}]]</td>
+                    <td>[[${war.warName}]]</td>
+                    <td>[[${war.participatingStates}]]</td>
+                    <td>[[${war.dateOfBeginning}]]</td>
+                    <td>[[${war.dateOfEnd}]]</td>
+                    <td>[[${war.victor}]]</td>
+                    <td>[[${war.results}]]</td>
+                    <td sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">
+                        <a class="h5 mr-3" th:href="@{'/wars/edit/' +${war.idWar}}">Edit</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a sec:authorize="hasAuthority('ADMIN')" class="h5" th:href="@{'/wars/delete/' +${war.idWar}}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="center">Manage State-Wars</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>
+                <div class="container-fluid text-center">
+                <div class="m-2">
+                    <a class="h3" th:href="@{/stateWars/new}">Add New State-War (details)</a>
+                </div>
+                    <div>
+                        <table class="table table-bordered">
+                            <thead class="thead-dark">
+                            <tr class="something">
+                                <th>State Name</th>
+                                <th>War Name</th>
+                                <th>Territory during War</th>
+                                <th>Population during War (in mln)</th>
+                                <th>GDP during War (in bln)</th>
+                                <th>On Date</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <th:block th:each="stateWar : ${stateWars}">
+                                <tr>
+                                    <td>[[${stateWar.stateW.getOfficialStateName}]]</td>
+                                    <td>[[${stateWar.war.getWarName}]]</td>
+                                    <td>[[${stateWar.territoryWar}]]</td>
+                                    <td>[[${stateWar.populationWar}]]</td>
+                                    <td>[[${stateWar.gdpWar}]]</td>
+                                    <td>[[${stateWar.onDateWar}]]</td>
+                                    <td>
+                                        <a class="h6 mr-3" th:href="@{'/stateWars/edit/' +${stateWar.warSKey}}">Edit</a>
+                                        <a class="h6" th:href="@{'/stateWars/delete/' +${stateWar.warSKey}}">Delete</a>
+                                    </td>
+                                </tr>
+                            </th:block>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+    // Get the button that opens the modal
+    var btn = document.querySelector("#myBtn");
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function() {   modal.style.display = "block"; }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {   modal.style.display = "none"; }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        } }
+    document.getElementById('search-by').addEventListener('change', function(e) {
+        let findBy = this.value;
+        console.log(findBy);
+        this.form.action = `/wars/${findBy}`;
+        if(document.getElementById("filter").name === 'warName'){
+            document.getElementById("filter").type = 'date';
+            document.getElementById("filter1").style.display = "block";
+            document.getElementById("filter1").removeAttribute('disabled');
+            document.getElementById("id1").object = 'myWar';
+            document.getElementById("filter").name = 'dateOfBeginning';
+            document.getElementById("filter1").name = 'dateOfEnd';
+        } else{
+            document.getElementById("filter").name = 'warName';
+            document.getElementById("filter").type = 'text';
+            document.getElementById("filter1").style.display = "none";
+        }
+    });
+</script>
+</body>
+</html>

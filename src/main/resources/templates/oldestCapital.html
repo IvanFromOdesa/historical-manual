@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to My Application</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container-fluid text-center">
+    <div><h2>The Oldest Capital</h2></div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>State Name</th>
+                <th>Capital Name</th>
+                <th>Date of Formation</th>
+                <th>Date of Termination</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="stateCapital : ${stateCapital1}">
+                <tr>
+                    <td>[[${stateCapital.getState.getOfficialStateName}]]</td>
+                    <td>[[${stateCapital.capital.getOfficialCapitalName}]]</td>
+                    <td>[[${stateCapital.dateOfFormation}]]</td>
+                    <td>[[${stateCapital.terminationDate}]]</td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

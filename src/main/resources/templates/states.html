@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to My Application</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<style> {font-family: Arial, Helvetica, sans-serif;}
+    .btn {
+        line-height:0px;
+        height:20px;
+        font-family: 'Poppins';
+        color: #fff !important;
+        text-transform: uppercase;
+        font-weight: 700;
+        text-decoration: none;
+        background: #60a3bc;
+        padding: 20px;
+        border-radius: 50px;
+        display: inline-block;
+        border: none;
+        transition: all 0.4s ease 0s;
+    }
+
+    .btn:hover {
+        text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+        -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+        -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+        transition: all 0.4s ease 0s;
+    }
+
+    .left {
+        font-size: 20px;
+        text-align: left;
+    }
+
+    .child {
+        font-size: 20px;
+        display: inline-block;
+        padding: 10px;
+    }
+
+    .right{
+        font-size: 20px;
+        right: 150px;
+    }
+</style>
+<body>
+<div class="container-fluid text-center">
+    <div><h2>Manage States</h2></div>
+    <div class="m-2">
+        <a class="h3" th:href="@{/states/new}">Add New State</a>
+    </div>
+    <div class="m-2">
+        <a class="h3" th:href="@{http://localhost:8080/}">Back to Main Menu</a>
+    </div>
+    <div th:if="${message}" class="alert alert-success">
+        [[${message}]]
+    </div>
+    <h4 class="left">
+        <form ui-jp="parsley" id="id1" th:action="@{/states/showLanguages}" method="get">
+            <div class="row m-b">
+                <div class="child">Find
+                    <select id="search-by">
+                        <option value="showLanguages">Languages</option>
+                        <option value="showCurrencies">Currencies</option>
+                    </select></div>
+                <div class="child box-3">
+                    <button class="btn" id="newBtn">Search!</button>
+                </div>
+            </div>
+        </form>
+    </h4>
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Official State Name</th>
+                <th>Official Language</th>
+                <th>State Currency</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="state : ${listStates}">
+                <tr>
+                    <td>[[${state.idState}]]</td>
+                    <td>[[${state.officialStateName}]]</td>
+                    <td>[[${state.officialLanguage}]]</td>
+                    <td>[[${state.stateCurrency}]]</td>
+                    <td sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">
+                        <a class="h4 mr-3" th:href="@{'/states/edit/' +${state.idState}}">Edit</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a sec:authorize="hasAuthority('ADMIN')" class="h4" th:href="@{'/states/delete/' +${state.idState}}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    document.getElementById('search-by').addEventListener('change', function(e) {
+        let searchBy = this.value;
+        console.log(searchBy);
+        this.form.action = `/states/${searchBy}`;
+    });
+</script>
+</body>
+</html>

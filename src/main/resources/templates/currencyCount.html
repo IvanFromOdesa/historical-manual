@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to My Application</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container-fluid text-center">
+    <div><h2>Total number of states using given currencies</h2></div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>Official Currency Name</th>
+                <th>Number of States</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="cur : ${listStates2}">
+                <tr>
+                    <td>[[${cur.getCurName}]]</td>
+                    <td>[[${cur.getTotal}]]</td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

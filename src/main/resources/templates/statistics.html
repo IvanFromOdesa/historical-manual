@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to My Application</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<style>
+    .color {
+        font-size: 18px;
+        color: #663300 !important;
+    }
+    .color:hover, .color:active {
+        color: #664D33 !important;
+    }
+</style>
+<body>
+<div class="container-fluid text-center">
+    <div><h2>Manage Statistics</h2></div>
+    <div class="m-2">
+        <a class="h3" th:href="@{/statistics/new}">Add New Statistics</a>
+    </div>
+    <div class="m-2">
+        <a class="h3" th:href="@{http://localhost:8080/}">Back to Main Menu</a>
+    </div>
+    <div th:if="${messageS}" class="alert alert-success">
+        [[${messageS}]]
+    </div>
+    <div class="container-fluid text-center">
+        <a class="color" th:href="@{/statistics/moreThanAvgPopulation}">Show states with population density greater than Average</a>
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>General Population (in millions)</th>
+                <th>General GDP (in billions)</th>
+                <th>General Territory</th>
+                <th>On Date</th>
+                <th>Linked State</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="stat : ${listStats}">
+                <tr>
+                    <td>[[${stat.idStats}]]</td>
+                    <td>[[${stat.generalPopulation}]]</td>
+                    <td>[[${stat.generalGdp}]]</td>
+                    <td>[[${stat.generalTerritory}]]</td>
+                    <td>[[${stat.onDate}]]</td>
+                    <td>[[${stat.state.getOfficialStateName}]]</td>
+                    <td sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">
+                        <a class="h4 mr-3" th:href="@{'/statistics/edit/' +${stat.idStats}}">Edit</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a sec:authorize="hasAuthority('ADMIN')" class="h4" th:href="@{'/statistics/delete/' +${stat.idStats}}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
