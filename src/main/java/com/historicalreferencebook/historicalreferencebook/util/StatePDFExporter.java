@@ -11,61 +11,39 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
-public class StatePDFExporter {
-    private List<LanguageCount> listStates;
+public class StatePDFExporter extends AbstractPDFExporter {
+    private final Set<LanguageCount> list;
 
-    public StatePDFExporter(List<LanguageCount> listStates) {
-        this.listStates = listStates;
+    public StatePDFExporter(Set<LanguageCount> list) {
+        this.list = list;
     }
 
-    private void writeTableHeader(PdfPTable table){
-        PdfPCell cell = new PdfPCell();
-        cell.setBackgroundColor(Color.BLUE);
-        cell.setPadding(5);
-
-        Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-        font.setColor(Color.WHITE);
-
+    @Override
+    protected void setPhrasesAndAddCells() {
         cell.setPhrase(new Phrase("Official Language Name", font));
-
         table.addCell(cell);
 
         cell.setPhrase(new Phrase("Number of States", font));
         table.addCell(cell);
     }
 
-    private void writeTableData(PdfPTable table){
-        for(LanguageCount count: listStates){
-            table.addCell(count.getLangName());
-            table.addCell(String.valueOf(count.getTotal()));
-        }
+    @Override
+    protected void writeTableData(PdfPTable table){
+        list.forEach(entity-> {
+            table.addCell(entity.getLangName());
+            table.addCell(String.valueOf(entity.getTotal()));
+        });
     }
 
-    public void export(HttpServletResponse response) throws IOException {
-        Document document = new Document(PageSize.A4);
-        PdfWriter.getInstance(document, response.getOutputStream());
+    @Override
+    protected Paragraph setTitle() {
+        return new Paragraph("List of Languages used in States", font);
+    }
 
-        document.open();
-
-        Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-        font.setColor(Color.BLACK);
-        font.setSize(18);
-
-        Paragraph title = new Paragraph("List of Languages used in States", font);
-        title.setAlignment(Paragraph.ALIGN_CENTER);
-        document.add(title);
-
-        PdfPTable table = new PdfPTable(2);
-        table.setWidthPercentage(100);
-        table.setSpacingBefore(15);
-        //table.setWidths(new float[] {1.5f, 2.0f} );
-
-        writeTableHeader(table);
-        writeTableData(table);
-
-        document.add(table);
-
-        document.close();
+    @Override
+    protected PdfPTable setTable() {
+        return new PdfPTable(2);
     }
 }

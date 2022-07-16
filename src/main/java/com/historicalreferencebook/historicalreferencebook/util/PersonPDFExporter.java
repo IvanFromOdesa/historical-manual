@@ -11,23 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
-public class PersonPDFExporter {
+public class PersonPDFExporter extends AbstractPDFExporter {
 
-    private List<Person> list;
+    private final Set<Person> list;
 
-    public PersonPDFExporter(List<Person> list) {
+    public PersonPDFExporter(Set<Person> list) {
         this.list = list;
     }
 
-    private void writeTableHeader(PdfPTable table){
-        PdfPCell cell = new PdfPCell();
-        cell.setBackgroundColor(Color.ORANGE);
-        cell.setPadding(5);
-
-        com.lowagie.text.Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-        font.setColor(Color.WHITE);
-
+    @Override
+    protected void setPhrasesAndAddCells() {
         cell.setPhrase(new Phrase("Person Name", font));
         table.addCell(cell);
 
@@ -38,37 +33,22 @@ public class PersonPDFExporter {
         table.addCell(cell);
     }
 
-    private void writeTableData(PdfPTable table){
-        for(Person count: list){
-            table.addCell(count.getName());
-            table.addCell(count.getPosition());
-            table.addCell(String.valueOf(count.getRole()));
-        }
+    @Override
+    protected void writeTableData(PdfPTable table){
+        list.forEach(entity-> {
+            table.addCell(entity.getName());
+            table.addCell(entity.getPosition());
+            table.addCell(String.valueOf(entity.getRole()));
+        });
     }
 
-    public void export(HttpServletResponse response) throws IOException {
-        Document document = new Document(PageSize.A4);
-        PdfWriter.getInstance(document, response.getOutputStream());
+    @Override
+    protected Paragraph setTitle() {
+        return new Paragraph("All existing Persons (listed below)", font);
+    }
 
-        document.open();
-
-        Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-        font.setColor(Color.BLACK);
-        font.setSize(18);
-
-        Paragraph title = new Paragraph("All existing Persons (listed below)", font);
-        title.setAlignment(Paragraph.ALIGN_CENTER);
-        document.add(title);
-
-        PdfPTable table = new PdfPTable(3);
-        table.setWidthPercentage(100);
-        table.setSpacingBefore(15);
-
-        writeTableHeader(table);
-        writeTableData(table);
-
-        document.add(table);
-
-        document.close();
+    @Override
+    protected PdfPTable setTable() {
+        return new PdfPTable(3);
     }
 }
