@@ -1,9 +1,16 @@
 package com.historicalreferencebook.historicalreferencebook.domain;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name="state_war")
+@Getter
+@Setter
+@EqualsAndHashCode
 public class StateWar {
 
     @Id
@@ -30,60 +37,4 @@ public class StateWar {
     @ManyToOne
     @JoinColumn(name = "war_id", referencedColumnName = "id_war")
     private War war;
-
-    public Integer getWarSKey() {
-        return warSKey;
-    }
-
-    public void setWarSKey(Integer warSKey) {
-        this.warSKey = warSKey;
-    }
-
-    public Integer getTerritoryWar() {
-        return territoryWar;
-    }
-
-    public void setTerritoryWar(Integer territoryWar) {
-        this.territoryWar = territoryWar;
-    }
-
-    public Integer getPopulationWar() {
-        return populationWar;
-    }
-
-    public void setPopulationWar(Integer populationWar) {
-        this.populationWar = populationWar;
-    }
-
-    public Integer getGdpWar() {
-        return gdpWar;
-    }
-
-    public void setGdpWar(Integer gdpWar) {
-        this.gdpWar = gdpWar;
-    }
-
-    public java.sql.Date getOnDateWar() {
-        return onDateWar;
-    }
-
-    public void setOnDateWar(java.sql.Date onDateWar) {
-        this.onDateWar = onDateWar;
-    }
-
-    public State getStateW() {
-        return stateW;
-    }
-
-    public void setStateW(State stateW) {
-        this.stateW = stateW;
-    }
-
-    public War getWar() {
-        return war;
-    }
-
-    public void setWar(War war) {
-        this.war = war;
-    }
 }

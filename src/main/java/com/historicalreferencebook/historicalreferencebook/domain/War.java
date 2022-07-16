@@ -1,6 +1,10 @@
 package com.historicalreferencebook.historicalreferencebook.domain;
 
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,6 +14,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "war")
+@Getter
+@Setter
+@EqualsAndHashCode
 public class War implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,63 +42,5 @@ public class War implements Serializable {
     private String results;
 
     @OneToMany(mappedBy = "war", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<StateWar> stateWars;
-
-    public List<StateWar> getStateWars() {return stateWars;}
-
-    public void setStateWars(List<StateWar> stateWars) {this.stateWars = stateWars;}
-
-    public Integer getIdWar() {return this.idWar;}
-
-    public void setIdWar(Integer idWar) {
-        this.idWar = idWar;
-    }
-
-    public String getWarName() {
-        return this.warName;
-    }
-
-    public void setWarName(String warName) {
-        this.warName = warName;
-    }
-
-    public String getParticipatingStates() {
-        return this.participatingStates;
-    }
-
-    public void setParticipatingStates(String participatingStates) {
-        this.participatingStates = participatingStates;
-    }
-
-    public java.sql.Date getDateOfBeginning() {
-        return this.dateOfBeginning;
-    }
-
-    public void setDateOfBeginning(java.sql.Date dateOfBeginning) {
-        this.dateOfBeginning = dateOfBeginning;
-    }
-
-    public java.sql.Date getDateOfEnd() {
-        return this.dateOfEnd;
-    }
-
-    public void setDateOfEnd(java.sql.Date dateOfEnd) {
-        this.dateOfEnd = dateOfEnd;
-    }
-
-    public String getVictor() {
-        return this.victor;
-    }
-
-    public void setVictor(String victor) {
-        this.victor = victor;
-    }
-
-    public String getResults() {
-        return this.results;
-    }
-
-    public void setResults(String results) {
-        this.results = results;
-    }
+    private Set<StateWar> stateWars;
 }

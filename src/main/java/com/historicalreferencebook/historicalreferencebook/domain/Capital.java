@@ -1,14 +1,18 @@
 package com.historicalreferencebook.historicalreferencebook.domain;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name="capital")
+@Getter
+@Setter
+@EqualsAndHashCode
 public class Capital implements Serializable {
 
     @Id
@@ -26,25 +30,5 @@ public class Capital implements Serializable {
     private Integer capitalSquare;
 
     @OneToMany(mappedBy = "capital", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<StateCapital> stateCapitals;
-
-    public List<StateCapital> getStateCapitals() {return stateCapitals;}
-
-    public void setStateCapitals(List<StateCapital> stateCapitals) {this.stateCapitals = stateCapitals;}
-
-    public Integer getIdCapital() {return idCapital;}
-
-    public void setIdCapital(Integer idCapital) {this.idCapital = idCapital;}
-
-    public String getOfficialCapitalName() {return officialCapitalName;}
-
-    public void setOfficialCapitalName(String officialCapitalName) {this.officialCapitalName = officialCapitalName;}
-
-    public Integer getCapitalPopulation() {return capitalPopulation;}
-
-    public void setCapitalPopulation(Integer capitalPopulation) {this.capitalPopulation = capitalPopulation;}
-
-    public Integer getCapitalSquare() {return capitalSquare;}
-
-    public void setCapitalSquare(Integer capitalSquare) {this.capitalSquare = capitalSquare;}
+    private Set<StateCapital> stateCapitals;
 }

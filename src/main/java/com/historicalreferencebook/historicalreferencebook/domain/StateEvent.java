@@ -1,5 +1,8 @@
 package com.historicalreferencebook.historicalreferencebook.domain;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -8,6 +11,9 @@ import java.sql.Date;
 
 @Entity
 @Table(name="state_event")
+@Getter
+@Setter
+@EqualsAndHashCode
 public class StateEvent {
 
     @Id
@@ -32,52 +38,4 @@ public class StateEvent {
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     @JoinColumn(name = "event_id", referencedColumnName = "id_event")
     private Event event;
-
-    public Integer getStatKey() {
-        return statKey;
-    }
-
-    public void setStatKey(Integer statKey) {
-        this.statKey = statKey;
-    }
-
-    public Integer getEventGdp() {
-        return eventGdp;
-    }
-
-    public void setEventGdp(Integer eventGdp) {
-        this.eventGdp = eventGdp;
-    }
-
-    public Integer getPopulationEvent() {
-        return populationEvent;
-    }
-
-    public void setPopulationEvent(Integer populationEvent) {
-        this.populationEvent = populationEvent;
-    }
-
-    public Date getOnDateE() {
-        return onDateE;
-    }
-
-    public void setOnDateE(Date onDateE) {
-        this.onDateE = onDateE;
-    }
-
-    public State getState() {
-        return state;
-    }
-
-    public void setState(State state) {
-        this.state = state;
-    }
-
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
-    }
 }

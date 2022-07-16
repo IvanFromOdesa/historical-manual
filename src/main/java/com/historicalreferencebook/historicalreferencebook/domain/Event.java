@@ -1,5 +1,8 @@
 package com.historicalreferencebook.historicalreferencebook.domain;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -12,6 +15,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "event")
+@Getter
+@Setter
+@EqualsAndHashCode
 public class Event implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,47 +37,5 @@ public class Event implements Serializable {
     private String eventSubject;
 
     @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<StateEvent> stateEvents;
-
-    public List<StateEvent> getStateEvents() {return stateEvents;}
-
-    public void setStateEvents(List<StateEvent> stateEvents) {this.stateEvents = stateEvents;}
-
-    public Integer getIdEvent() {
-        return this.idEvent;
-    }
-
-    public void setIdEvent(Integer idEvent) {this.idEvent = idEvent;}
-
-    public String getEventName() {
-        return this.eventName;
-    }
-
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
-    }
-
-    public java.sql.Date getDateOfBeginning() {
-        return this.dateOfBeginning;
-    }
-
-    public void setDateOfBeginning(java.sql.Date dateOfBeginning) {
-        this.dateOfBeginning = dateOfBeginning;
-    }
-
-    public java.sql.Date getDateOfEnd() {
-        return this.dateOfEnd;
-    }
-
-    public void setDateOfEnd(java.sql.Date dateOfEnd) {
-        this.dateOfEnd = dateOfEnd;
-    }
-
-    public String getEventSubject() {
-        return this.eventSubject;
-    }
-
-    public void setEventSubject(String eventSubject) {
-        this.eventSubject = eventSubject;
-    }
+    private Set<StateEvent> stateEvents;
 }

@@ -1,14 +1,21 @@
 package com.historicalreferencebook.historicalreferencebook.domain;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "state")
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode
 public class State implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,88 +32,25 @@ public class State implements Serializable {
     private String stateCurrency;
 
     @OneToMany(mappedBy = "stateC", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<StateCapital> stateCapitals;
+    private Set<StateCapital> stateCapitals;
 
     @OneToMany(mappedBy = "state", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<StateEvent> stateEvents;
+    private Set<StateEvent> stateEvents;
 
     @OneToMany(mappedBy = "stateW", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<StateWar> stateWars;
+    private Set<StateWar> stateWars;
 
     @OneToMany(mappedBy = "state", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Governor> governors;
+    private Set<Governor> governors;
 
     @OneToMany(mappedBy = "state", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Figure> figures;
+    private Set<Figure> figures;
 
     @OneToMany(mappedBy = "state", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Statistics> statistics;
-
-    public State() {
-    }
+    private Set<Statistics> statistics;
 
     public State(Integer idState, String officialStateName) {
         this.idState = idState;
         this.officialStateName = officialStateName;
-    }
-
-    public List<Figure> getFigures() {
-        return figures;
-    }
-
-    public void setFigures(List<Figure> figures) {
-        this.figures = figures;
-    }
-
-    public List<Statistics> getStatistics() {
-        return statistics;
-    }
-
-    public void setStatistics(List<Statistics> statistics) {
-        this.statistics = statistics;
-    }
-
-    public List<Governor> getGovernors() {return governors;}
-
-    public void setGovernors(List<Governor> governors) {this.governors = governors;}
-
-    public List<StateWar> getStateWars() {return stateWars;}
-
-    public void setStateWars(List<StateWar> stateWars) {this.stateWars = stateWars;}
-
-    public List<StateEvent> getStateEvents() {return stateEvents;}
-
-    public void setStateEvents(List<StateEvent> stateEvents) {this.stateEvents = stateEvents;}
-
-    public List<StateCapital> getStateCapitals() {return stateCapitals;}
-
-    public void setStateCapitals(List<StateCapital> stateCapitals) {this.stateCapitals = stateCapitals;}
-
-    public Integer getIdState() {return this.idState;}
-
-    public void setIdState(Integer idState) {this.idState = idState;}
-
-    public String getOfficialStateName() {
-        return this.officialStateName;
-    }
-
-    public void setOfficialStateName(String officialStateName) {
-        this.officialStateName = officialStateName;
-    }
-
-    public String getOfficialLanguage() {
-        return this.officialLanguage;
-    }
-
-    public void setOfficialLanguage(String officialLanguage) {
-        this.officialLanguage = officialLanguage;
-    }
-
-    public String getStateCurrency() {
-        return this.stateCurrency;
-    }
-
-    public void setStateCurrency(String stateCurrency) {
-        this.stateCurrency = stateCurrency;
     }
 }
