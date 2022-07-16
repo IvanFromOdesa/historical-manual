@@ -1,19 +1,18 @@
-package com.historicalreferencebook.historicalreferencebook.config;
+package com.historicalreferencebook.historicalreferencebook.security.config;
 
 import com.historicalreferencebook.historicalreferencebook.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig {
     @Bean
     public UserDetailsService userDetailsService(){
         return new UserDetailsServiceImpl();
@@ -33,14 +32,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return authProvider;
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-        auth.authenticationProvider(authenticationProvider());
-    }
+    @Bean
+    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception{
-                 // change
         http.authorizeRequests()
                 .antMatchers("/states/delete/**").hasAuthority("ADMIN")
                 .antMatchers("/states/edit/**").hasAnyAuthority("ADMIN", "EDITOR")
@@ -62,8 +56,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().permitAll()
                 .and()
-                .exceptionHandling().accessDeniedPage("/403")
-                ;
+                .exceptionHandling().accessDeniedPage("/403");
+
+        return http.build();
     }
 }
 
