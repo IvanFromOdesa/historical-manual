@@ -12,7 +12,7 @@ import java.util.Set;
 @Table(name="capital")
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = "stateCapitals")
 public class Capital implements Serializable {
 
     @Id

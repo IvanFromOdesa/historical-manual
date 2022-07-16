@@ -16,8 +16,9 @@ import java.util.Set;
 @Table(name = "war")
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = "stateWars")
 public class War implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_war")

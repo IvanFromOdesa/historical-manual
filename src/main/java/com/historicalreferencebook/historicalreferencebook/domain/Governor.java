@@ -14,6 +14,7 @@ import java.io.Serializable;
 @Setter
 @EqualsAndHashCode
 public class Governor implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_governor")

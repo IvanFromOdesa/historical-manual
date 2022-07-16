@@ -14,6 +14,7 @@ import java.sql.Date;
 @Setter
 @EqualsAndHashCode
 public class Figure implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_figure")

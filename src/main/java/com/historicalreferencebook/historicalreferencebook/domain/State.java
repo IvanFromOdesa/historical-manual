@@ -15,7 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = {"stateCapitals", "stateEvents", "stateWars", "governors", "figures", "statistics"})
 public class State implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

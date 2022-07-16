@@ -13,6 +13,7 @@ import java.io.Serializable;
 @Setter
 @EqualsAndHashCode
 public class Statistics implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_stats")
