@@ -26,7 +26,7 @@
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">State</label>
                 <div class="col-sm-8">
-                    <select th:field="*{state}" class="form-control" required>
+                    <select th:field="*{stateC}" class="form-control" required>
                         <th:block th:each="state1 : ${listStates}">
                             <option th:text="${state1.officialStateName}" th:value="${state1.idState}"/>
                         </th:block>
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-4 col-form-label">War</label>
+                <label class="col-sm-4 col-form-label">Capital</label>
                 <div class="col-sm-8">
                     <select th:field="*{capital}" class="form-control" required>
                         <th:block th:each="capital1 : ${listCapitals}">
