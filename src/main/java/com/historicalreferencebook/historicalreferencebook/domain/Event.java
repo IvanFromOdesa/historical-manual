@@ -1,8 +1,6 @@
 package com.historicalreferencebook.historicalreferencebook.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -18,23 +16,30 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode(exclude = "stateEvents")
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class Event implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_event")
+    @NonNull
     private Integer idEvent;
 
     @Column(name = "event_name")
+    @NonNull
     private String eventName;
 
     @Column(name = "date_of_beginning")
+    @NonNull
     private java.sql.Date dateOfBeginning;
 
     @Column(name = "date_of_end")
+    @NonNull
     private java.sql.Date dateOfEnd;
 
     @Column(name = "event_subject")
+    @NonNull
     private String eventSubject;
 
     @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

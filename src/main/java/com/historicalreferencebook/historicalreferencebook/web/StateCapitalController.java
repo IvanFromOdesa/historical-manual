@@ -1,10 +1,12 @@
 package com.historicalreferencebook.historicalreferencebook.web;
 
-import com.historicalreferencebook.historicalreferencebook.domain.*;
-import com.historicalreferencebook.historicalreferencebook.exceptions.StateNotFoundException;
-import com.historicalreferencebook.historicalreferencebook.repository.*;
-import com.historicalreferencebook.historicalreferencebook.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.historicalreferencebook.historicalreferencebook.domain.Capital;
+import com.historicalreferencebook.historicalreferencebook.domain.State;
+import com.historicalreferencebook.historicalreferencebook.domain.StateCapital;
+import com.historicalreferencebook.historicalreferencebook.service.CapitalService;
+import com.historicalreferencebook.historicalreferencebook.service.StateCapitalService;
+import com.historicalreferencebook.historicalreferencebook.service.StateService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,30 +14,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.persistence.EntityNotFoundException;
-import java.util.List;
+import java.util.Set;
 
 @Controller
+@AllArgsConstructor
 public class StateCapitalController {
-    @Autowired
-    StateCapitalService service;
-    @Autowired
-    StateCapitalRepository repository;
 
-    @Autowired
-    StateRepository stateRepository;
-    @Autowired
-    StateService stateService;
-    @Autowired
-    CapitalService capitalService;
+    private final StateCapitalService service;
 
-    @Autowired
-    CapitalRepository capitalRepository;
+    private final StateService stateService;
+
+    private final CapitalService capitalService;
 
     @GetMapping("/stateCapitals/new")
-    public String showNewStateCapitalForm(Model model){
-        List <State> listStates = stateService.findAll();
-        List <Capital> listCapitals = capitalService.findAllCapitals();
+    public String showNewStateCapitalForm(Model model) {
+        Set<State> listStates = stateService.findAll();
+        Set<Capital> listCapitals = capitalService.findAllCapitals();
         model.addAttribute("listStates", listStates);
         model.addAttribute("listCapitals", listCapitals);
         model.addAttribute("stateCapital", new StateCapital());
@@ -44,43 +38,36 @@ public class StateCapitalController {
     }
 
     @PostMapping("/stateCapitals/save")
-    public String saveStateCapital (StateCapital requestStateCapital, RedirectAttributes redirectAttributes){
-        repository.save(requestStateCapital);
+    public String saveStateCapital (StateCapital requestStateCapital,
+                                    RedirectAttributes redirectAttributes) {
+        service.saveStateCapital(requestStateCapital);
         redirectAttributes.addFlashAttribute("messageC", "The state-capital has been saved successfully!");
         return "redirect:/capitals";
     }
 
     @GetMapping("/stateCapitals/edit/{id}")
-    public String showEditStateCapitalForm(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
-        try {
-            StateCapital stateCapital = service.findStateCapitalById(id);
-            List <State>  listStates = stateService.findAll();
-            List <Capital>  listCapitals = capitalService.findAllCapitals();
-            model.addAttribute("listStates", listStates);
-            model.addAttribute("listCapitals", listCapitals);
-            model.addAttribute("stateCapital", stateCapital);
-            model.addAttribute("pageTitleSC", "Edit State-Capital (ID: " + id + ")");
-            return "stateCapital_form";
-        } catch (EntityNotFoundException e) {
-            redirectAttributes.addFlashAttribute("messageC", e.getMessage());
-            return "redirect:/capitals";
-        }
+    public String showEditStateCapitalForm(@PathVariable("id") Integer id, Model model) {
+        StateCapital stateCapital = service.findStateCapitalById(id);
+        Set<State> listStates = stateService.findAll();
+        Set<Capital> listCapitals = capitalService.findAllCapitals();
+        model.addAttribute("listStates", listStates);
+        model.addAttribute("listCapitals", listCapitals);
+        model.addAttribute("stateCapital", stateCapital);
+        model.addAttribute("pageTitleSC", "Edit State-Capital (ID: " + id + ")");
+        return "stateCapital_form";
     }
 
     @GetMapping("/stateCapitals/delete/{id}")
-    public String deleteStateCapital(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
-        try {
-            service.deleteStateCapital(id);
-            redirectAttributes.addFlashAttribute("messageC", "The state-capital ID " + id + " has been deleted!");
-        } catch (StateNotFoundException e) {
-            redirectAttributes.addFlashAttribute("messageC", e.getMessage());
-        }
+    public String deleteStateCapital(@PathVariable("id") Integer id, Model model,
+                                     RedirectAttributes redirectAttributes) {
+        service.deleteStateCapital(id);
+        redirectAttributes.addFlashAttribute("messageC", "The state-capital ID " + id + " has been deleted!");
         return "redirect:/capitals";
     }
 
     @GetMapping("/stateCapitals/showTheOldestCapital")
-    public String showTheOldestCapital(Model model){
-        StateCapital stateCapital1 = repository.searchByOldestDateOfFormation();
+    public String showTheOldestCapital(Model model) {
+        StateCapital stateCapital1 = service.findTheOldestCapital();
         model.addAttribute("stateCapital1", stateCapital1);
         return "oldestCapital";
     }

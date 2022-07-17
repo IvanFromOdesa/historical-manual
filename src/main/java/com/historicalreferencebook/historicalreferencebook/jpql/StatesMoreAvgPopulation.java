@@ -1,30 +1,17 @@
 package com.historicalreferencebook.historicalreferencebook.jpql;
 
-import java.math.BigDecimal;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.math.BigDecimal;
+@Getter
+@Setter
+@AllArgsConstructor
+@EqualsAndHashCode
 public class StatesMoreAvgPopulation {
 
     private String name;
     private BigDecimal result;
-
-    public StatesMoreAvgPopulation(String name, BigDecimal result) {
-        this.name = name;
-        this.result = result;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public BigDecimal getResult() {
-        return result;
-    }
-
-    public void setResult(BigDecimal result) {
-        this.result = result;
-    }
 }

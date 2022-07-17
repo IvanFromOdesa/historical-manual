@@ -8,18 +8,18 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
-public interface FigureRepository extends JpaRepository<Figure, Integer> {
+public interface FigureRepository extends CrudRepository<Figure, Integer> {
+
     Long countByIdFigure(int id);
 
-    @Transactional
     @Query(value = "SELECT * FROM figure WHERE figure.full_name LIKE ?1%", nativeQuery = true)
-    List <Figure> findByFullNameContaining(String name);
+    Set<Figure> findByFullNameContaining(String name);
 
-    @Transactional
     @Query(value="SELECT pib, position AS activity, 'governor' as role FROM governor\n" +
             "UNION ALL\n" +
             "SELECT full_name, kind_of_activity, 'figure' FROM figure\n" +
             "ORDER BY activity", nativeQuery = true)
-    List <Object[]> findFiguresAndGovernors();
+    Set<Object[]> findFiguresAndGovernors();
 }

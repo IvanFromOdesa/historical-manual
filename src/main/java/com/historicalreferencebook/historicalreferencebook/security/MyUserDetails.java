@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class MyUserDetails implements UserDetails {
 
-    private User user;
+    private final User user;
 
     public MyUserDetails(User user) {
         this.user = user;

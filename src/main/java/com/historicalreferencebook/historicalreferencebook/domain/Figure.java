@@ -1,8 +1,6 @@
 package com.historicalreferencebook.historicalreferencebook.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,6 +11,8 @@ import java.sql.Date;
 @Getter
 @Setter
 @EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 public class Figure implements Serializable {
 
     @Id

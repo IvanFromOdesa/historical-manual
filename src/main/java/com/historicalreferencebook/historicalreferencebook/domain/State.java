@@ -1,9 +1,6 @@
 package com.historicalreferencebook.historicalreferencebook.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,6 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@RequiredArgsConstructor
 @EqualsAndHashCode(exclude = {"stateCapitals", "stateEvents", "stateWars", "governors", "figures", "statistics"})
 public class State implements Serializable {
     @Id
@@ -23,6 +21,7 @@ public class State implements Serializable {
     private Integer idState;
 
     @Column(name = "official_state_name")
+    @NonNull
     private String officialStateName;
 
     @Column(name = "official_language")

@@ -1,9 +1,7 @@
 package com.historicalreferencebook.historicalreferencebook.domain;
 
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,6 +11,8 @@ import java.io.Serializable;
 @Getter
 @Setter
 @EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 public class Governor implements Serializable {
 
     @Id

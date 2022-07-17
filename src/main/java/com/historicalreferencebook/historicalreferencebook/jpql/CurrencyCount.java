@@ -1,28 +1,16 @@
 package com.historicalreferencebook.historicalreferencebook.jpql;
 
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@EqualsAndHashCode
 public class CurrencyCount {
 
     private String curName;
     private Long total;
-
-    public CurrencyCount(String curName, Long total) {
-        this.curName = curName;
-        this.total = total;
-    }
-
-    public String getCurName() {
-        return curName;
-    }
-
-    public void setCurName(String curName) {
-        this.curName = curName;
-    }
-
-    public Long getTotal() {
-        return total;
-    }
-
-    public void setTotal(Long total) {
-        this.total = total;
-    }
 }
