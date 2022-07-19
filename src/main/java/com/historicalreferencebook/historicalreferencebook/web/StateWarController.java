@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -28,8 +29,8 @@ public class StateWarController {
 
     @GetMapping("/stateWars/new")
     public String showNewStateWarForm(Model model){
-        Set<State> listStates = stateService.findAll();
-        Set<War> listWars = warService.findAllWars();
+        List<State> listStates = stateService.findAll();
+        List<War> listWars = warService.findAllWars();
         model.addAttribute("listStates", listStates);
         model.addAttribute("listWars", listWars);
         model.addAttribute("stateWar", new StateWar());
@@ -47,8 +48,8 @@ public class StateWarController {
     @GetMapping("/stateWars/edit/{id}")
     public String showEditStateWarForm(@PathVariable("id") Integer id, Model model) {
         StateWar stateWar = service.findStateWarById(id);
-        Set<State>  listStates = stateService.findAll();
-        Set<War> listWars = warService.findAllWars();
+        List<State> listStates = stateService.findAll();
+        List<War> listWars = warService.findAllWars();
         model.addAttribute("listStates", listStates);
         model.addAttribute("listWars", listWars);
         model.addAttribute("stateWar", stateWar);

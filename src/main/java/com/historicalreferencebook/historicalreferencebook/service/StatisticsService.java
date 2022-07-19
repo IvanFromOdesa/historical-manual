@@ -11,10 +11,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,8 +20,8 @@ public class StatisticsService implements GeneralContent{
 
     private final StatisticsRepository statisticsRepository;
 
-    public Set<Statistics> findAllStats(){
-        return (Set<Statistics>) statisticsRepository.findAll();
+    public List<Statistics> findAllStats(){
+        return (List<Statistics>) statisticsRepository.findAll();
     }
 
     public Statistics findStatById(Integer id) {

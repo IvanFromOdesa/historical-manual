@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.sql.Date;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -17,8 +18,8 @@ public class EventService {
 
     private final EventRepository eventRepository;
 
-    public Set<Event> findAllEvents(){
-        return (Set<Event>) eventRepository.findAll();
+    public List<Event> findAllEvents(){
+        return (List<Event>) eventRepository.findAll();
     }
 
     public Event findEventById(Integer id) {

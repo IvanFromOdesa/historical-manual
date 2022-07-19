@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -15,8 +16,8 @@ public class StateWarService {
 
     private final StateWarRepository repository;
 
-    public Set<StateWar> findAllStateWars(){
-        return (Set<StateWar>) repository.findAll();
+    public List<StateWar> findAllStateWars(){
+        return (List<StateWar>) repository.findAll();
     }
 
     public StateWar findStateWarById(Integer id) {

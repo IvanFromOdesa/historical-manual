@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -31,8 +32,8 @@ public class EventController {
     @GetMapping("/events")
     public String showAllEvents(Model model, @ModelAttribute ("myState") State myState,
                                 @ModelAttribute ("myEvent") Event myEvent){
-        Set<Event> listEvents = eventService.findAllEvents();
-        Set<StateEvent> stateEvents = stateEventService.findAllStateEvents();
+        List<Event> listEvents = eventService.findAllEvents();
+        List<StateEvent> stateEvents = stateEventService.findAllStateEvents();
         Boolean flag = false;
         model.addAttribute("flag", flag);
         model.addAttribute("listEvents", listEvents );
@@ -42,7 +43,7 @@ public class EventController {
 
     @GetMapping("/events/new")
     public String showNewEventForm(Model model){
-        Set<State>  listStates = stateService.findAll();
+        List<State>  listStates = stateService.findAll();
         model.addAttribute("listStates", listStates);
         model.addAttribute("event", new Event());
         model.addAttribute("pageTitleE", "Add New Event");
@@ -60,7 +61,7 @@ public class EventController {
     @GetMapping("/events/edit/{id}")
     public String showEditEventForm(@PathVariable("id") Integer id, Model model) {
         Event event = eventService.findEventById(id);
-        Set<State> listStates = stateService.findAll();
+        List<State> listStates = stateService.findAll();
         model.addAttribute("listStates", listStates);
         model.addAttribute("event", event);
         model.addAttribute("pageTitleE", "Edit Event (ID: " + id + ")");

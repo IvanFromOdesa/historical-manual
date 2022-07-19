@@ -30,8 +30,8 @@ public class WarController {
 
     @GetMapping("/wars")
     public String showAllWars(Model model, @ModelAttribute("myWar") War myWar) {
-        Set<War> listWars = warService.findAllWars();
-        Set<StateWar> stateWars = stateWarService.findAllStateWars();
+        List<War> listWars = warService.findAllWars();
+        List<StateWar> stateWars = stateWarService.findAllStateWars();
         Boolean flag = false;
         model.addAttribute("flag", flag);
         model.addAttribute("listWars", listWars);
@@ -41,7 +41,7 @@ public class WarController {
 
     @GetMapping("/wars/new")
     public String showNewWarForm(Model model) {
-        Set<State> listStates = stateService.findAll();
+        List<State> listStates = stateService.findAll();
         model.addAttribute("listStates", listStates);
         model.addAttribute("war", new War());
         model.addAttribute("pageTitleW", "Add New War");
@@ -58,7 +58,7 @@ public class WarController {
     @GetMapping("/wars/edit/{id}")
     public String showEditWarForm(@PathVariable("id") Integer id, Model model) {
         War war = warService.findWarById(id);
-        Set<State> listStates = stateService.findAll();
+        List<State> listStates = stateService.findAll();
         model.addAttribute("listStates", listStates);
         model.addAttribute("war", war);
         model.addAttribute("pageTitleW", "Edit War (ID: " + id + ")");

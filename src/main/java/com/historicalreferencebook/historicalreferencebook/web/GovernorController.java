@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -25,14 +26,14 @@ public class GovernorController {
 
     @GetMapping("/governors")
     public String showAllGovernors(Model model,  @ModelAttribute("myGovernor") Governor myGovernor) {
-        Set<Governor> listGovernors = governorService.findAllGovernors();
+        List<Governor> listGovernors = governorService.findAllGovernors();
         model.addAttribute("listGovernors", listGovernors);
         return "governors";
     }
 
     @GetMapping("/governors/new")
     public String showNewGovernorForm(Model model) {
-        Set<State> listStates = stateService.findAll();
+        List<State> listStates = stateService.findAll();
         model.addAttribute("listStates", listStates);
         model.addAttribute("governor", new Governor());
         model.addAttribute("pageTitleG", "Add New Governor");
@@ -49,7 +50,7 @@ public class GovernorController {
     @GetMapping("/governors/edit/{id}")
     public String showEditGovernorForm(@PathVariable("id") Integer id, Model model) {
         Governor governor = governorService.findGovernorById(id);
-        Set<State> listStates = stateService.findAll();
+        List<State> listStates = stateService.findAll();
         model.addAttribute("listStates", listStates);
         model.addAttribute("governor", governor);
         model.addAttribute("pageTitleG", "Edit Governor (ID: " + id + ")");

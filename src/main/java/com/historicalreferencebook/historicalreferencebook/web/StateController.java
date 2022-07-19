@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -24,7 +25,7 @@ public class StateController {
 
     @GetMapping("/states")
     public String showAllStates(Model model) {
-        Set<State> listStates = service.findAll();
+        List<State> listStates = service.findAll();
         model.addAttribute("listStates", listStates);
         return "states";
     }

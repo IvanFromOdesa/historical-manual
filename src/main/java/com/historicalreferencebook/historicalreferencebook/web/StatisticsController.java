@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -27,14 +28,14 @@ public class StatisticsController {
 
     @GetMapping("/statistics")
     public String showAllStats(Model model){
-        Set<Statistics> listStats = statisticsService.findAllStats();
+        List<Statistics> listStats = statisticsService.findAllStats();
         model.addAttribute("listStats", listStats);
         return "statistics";
     }
 
     @GetMapping("/statistics/new")
     public String showNewStatForm(Model model){
-        Set<State> listStates = stateService.findAll();
+        List<State> listStates = stateService.findAll();
         model.addAttribute("listStates", listStates);
         model.addAttribute("stat", new Statistics());
         model.addAttribute("pageTitleS", "Add New Statistics");
@@ -51,7 +52,7 @@ public class StatisticsController {
     @GetMapping("/statistics/edit/{id}")
     public String showEditStatForm(@PathVariable("id") Integer id, Model model) {
         Statistics statistics = statisticsService.findStatById(id);
-        Set<State> listStates = stateService.findAll();
+        List<State> listStates = stateService.findAll();
         model.addAttribute("listStates", listStates);
         model.addAttribute("stat", statistics);
         model.addAttribute("pageTitleS", "Edit Statistics (ID: " + id + ")");

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -15,8 +16,8 @@ public class StateEventService {
 
     private final StateEventRepository repository;
 
-    public Set<StateEvent> findAllStateEvents(){
-        return (Set<StateEvent>) repository.findAll();
+    public List<StateEvent> findAllStateEvents(){
+        return (List<StateEvent>) repository.findAll();
     }
 
     public StateEvent findStateEventById(Integer id) {

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -28,8 +29,8 @@ public class StateEventController {
 
     @GetMapping("/stateEvents/new")
     public String showNewStateEventForm(Model model){
-        Set<State> listStates = stateService.findAll();
-        Set<Event> listEvents = eventService.findAllEvents();
+        List<State> listStates = stateService.findAll();
+        List<Event> listEvents = eventService.findAllEvents();
         model.addAttribute("listStates", listStates);
         model.addAttribute("listEvents", listEvents);
         model.addAttribute("stateEvent", new StateEvent());
@@ -48,8 +49,8 @@ public class StateEventController {
     public String showEditStateEventForm(@PathVariable("id") Integer id, Model model,
                                          RedirectAttributes redirectAttributes){
         StateEvent stateEvent = service.findStateEventById(id);
-        Set<State> listStates = stateService.findAll();
-        Set<Event> listEvents = eventService.findAllEvents();
+        List<State> listStates = stateService.findAll();
+        List<Event> listEvents = eventService.findAllEvents();
         model.addAttribute("listStates", listStates);
         model.addAttribute("listEvents", listEvents);
         model.addAttribute("stateEvent", stateEvent);

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.sql.Date;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -17,8 +18,8 @@ public class CapitalService {
 
     private final CapitalRepository capitalRepository;
 
-    public Set<Capital> findAllCapitals(){
-        return (Set<Capital>) capitalRepository.findAll();
+    public List<Capital> findAllCapitals(){
+        return (List<Capital>) capitalRepository.findAll();
     }
 
     public Capital findCapitalById(Integer id) {

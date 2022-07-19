@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.sql.Date;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -17,8 +18,8 @@ public class WarService {
 
     private final WarRepository warRepository;
 
-    public Set<War> findAllWars(){
-        return (Set<War>) warRepository.findAll();
+    public List<War> findAllWars(){
+        return (List<War>)warRepository.findAll();
     }
 
     public War findWarById(Integer id) {

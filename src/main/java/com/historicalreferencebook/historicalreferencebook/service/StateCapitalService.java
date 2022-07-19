@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -15,8 +16,8 @@ public class StateCapitalService {
 
     private final StateCapitalRepository repository;
 
-    public Set<StateCapital> findAllStateCapitals(){
-        return (Set<StateCapital>) repository.findAll();
+    public List<StateCapital> findAllStateCapitals(){
+        return (List<StateCapital>) repository.findAll();
     }
 
     public StateCapital findStateCapitalById(Integer id) {

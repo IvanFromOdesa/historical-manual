@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -28,8 +29,8 @@ public class StateCapitalController {
 
     @GetMapping("/stateCapitals/new")
     public String showNewStateCapitalForm(Model model) {
-        Set<State> listStates = stateService.findAll();
-        Set<Capital> listCapitals = capitalService.findAllCapitals();
+        List<State> listStates = stateService.findAll();
+        List<Capital> listCapitals = capitalService.findAllCapitals();
         model.addAttribute("listStates", listStates);
         model.addAttribute("listCapitals", listCapitals);
         model.addAttribute("stateCapital", new StateCapital());
@@ -48,8 +49,8 @@ public class StateCapitalController {
     @GetMapping("/stateCapitals/edit/{id}")
     public String showEditStateCapitalForm(@PathVariable("id") Integer id, Model model) {
         StateCapital stateCapital = service.findStateCapitalById(id);
-        Set<State> listStates = stateService.findAll();
-        Set<Capital> listCapitals = capitalService.findAllCapitals();
+        List<State> listStates = stateService.findAll();
+        List<Capital> listCapitals = capitalService.findAllCapitals();
         model.addAttribute("listStates", listStates);
         model.addAttribute("listCapitals", listCapitals);
         model.addAttribute("stateCapital", stateCapital);

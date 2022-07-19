@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -28,14 +29,14 @@ public class FigureController {
 
     @GetMapping("/figures")
     public String showAllFigures(Model model,  @ModelAttribute("myFigure") Figure myFigure){
-        Set<Figure> listFigures = figureService.findAllFigures();
+        List<Figure> listFigures = figureService.findAllFigures();
         model.addAttribute("listFigures", listFigures);
         return "figures";
     }
 
     @GetMapping("/figures/new")
     public String showNewFigureForm(Model model){
-        Set<State> listStates = stateService.findAll();
+        List<State> listStates = stateService.findAll();
         model.addAttribute("listStates", listStates);
         model.addAttribute("figure1", new Figure());
         model.addAttribute("pageTitleF", "Add New Figure");
@@ -52,7 +53,7 @@ public class FigureController {
     @GetMapping("/figures/edit/{id}")
     public String showEditFigureForm(@PathVariable("id") Integer id, Model model){
         Figure figure = figureService.findFigureById(id);
-        Set<State> listStates = stateService.findAll();
+        List<State> listStates = stateService.findAll();
         model.addAttribute("listStates", listStates);
         model.addAttribute("figure1", figure);
         model.addAttribute("pageTitleF", "Edit Figure (ID: " + id + ")");

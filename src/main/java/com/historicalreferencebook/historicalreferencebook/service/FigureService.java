@@ -12,10 +12,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,8 +21,8 @@ public class FigureService implements GeneralContent {
 
     private final FigureRepository figureRepository;
 
-    public Set<Figure> findAllFigures(){
-        return (Set<Figure>) figureRepository.findAll();
+    public List<Figure> findAllFigures(){
+        return (List<Figure>) figureRepository.findAll();
     }
 
     public Figure findFigureById(Integer id) {

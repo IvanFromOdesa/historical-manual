@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -30,8 +31,8 @@ public class CapitalController {
     @GetMapping("/capitals")
     public String showAllCapitals(Model model, @ModelAttribute ("myState1") State myState1,
                                   @ModelAttribute StateCapital stateCapital1){
-        Set<Capital> listCapitals = capitalService.findAllCapitals();
-        Set<StateCapital> stateCapitals = stateCapitalService.findAllStateCapitals();
+        List<Capital> listCapitals = capitalService.findAllCapitals();
+        List<StateCapital> stateCapitals = stateCapitalService.findAllStateCapitals();
         Boolean flag = false;
         model.addAttribute("flag", flag);
         model.addAttribute("listCapitals", listCapitals);
@@ -41,7 +42,7 @@ public class CapitalController {
 
     @GetMapping("/capitals/new")
     public String showNewCapitalForm(Model model){
-        Set<State> listStates = stateService.findAll();
+        List<State> listStates = stateService.findAll();
         model.addAttribute("listStates", listStates);
         model.addAttribute("capital", new Capital());
         model.addAttribute("pageTitleC", "Add New Capital");
@@ -59,7 +60,7 @@ public class CapitalController {
     public String showEditCapitalForm(@PathVariable("id") Integer id,
                                       Model model){
         Capital capital= capitalService.findCapitalById(id);
-        Set<State> listStates = stateService.findAll();
+        List<State> listStates = stateService.findAll();
         model.addAttribute("listStates", listStates);
         model.addAttribute("capital", capital);
         model.addAttribute("pageTitleC", "Edit Capital (ID: " + id + ")");

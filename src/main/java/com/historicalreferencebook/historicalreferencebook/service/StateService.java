@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -21,8 +22,8 @@ public class StateService implements GeneralContent{
 
     private final StateRepository stateRepository;
 
-    public Set<State> findAll(){
-        return (Set<State>) stateRepository.findAll();
+    public List<State> findAll(){
+        return (List<State>) stateRepository.findAll();
     }
 
     public void saveState(State state) {

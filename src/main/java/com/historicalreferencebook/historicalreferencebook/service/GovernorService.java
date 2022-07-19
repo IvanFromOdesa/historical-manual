@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.sql.Date;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,8 +17,8 @@ public class GovernorService {
 
     private final GovernorRepository governorRepository;
 
-    public Set<Governor> findAllGovernors(){
-        return (Set<Governor>) governorRepository.findAll();
+    public List<Governor> findAllGovernors(){
+        return (List<Governor>) governorRepository.findAll();
     }
 
     public Governor findGovernorById(Integer id) {
