@@ -12,7 +12,7 @@ In this web-app I have implemented the simple concept of having 3 types of a cli
 2. Editor - the editor can view, add and edit the contents.
 3. Admin - the admin can view, add, edit and delete the contents.
 
-There is also an option to perform different custom queries, rather the CRUD. Every type of client is capable to perform any query.
+There is also an option to perform different custom queries, rather than CRUD. Every type of client is capable to perform any query.
 
 How server knows which type of client is using the web-app? An authentication and authorization system is implemeted using Spring Security.
 It is simply achieved by Form-Login type of auth (which lets the user to logout in contrast to Basic Auth).
